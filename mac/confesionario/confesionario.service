@@ -1,0 +1,20 @@
+# Reemplazar las rutas en MAYUS
+# Reemplazar USER con el user a ejecutarlo (por seguridad no colocar root)
+# Colocar este archivo junto a los demas servicios (/etc/init.d/  o  /etc/systemd/system/)
+# USO: ejecutar: service confesionario start (temporal)
+#                sudo systemctl enable confesionario.service (ejecutar automaticamente despues de bootear)
+
+[Unit]
+Description=Confesionario service
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=USUARIO
+ExecStart=/RUTA/DEL/TCPSERVER/ucspi-tcp-0.88/tcpserver -H -R 0.0.0.0 3334 /RUTA/DEL/SCRIPT/confesionario.sh
+
+[Install]
+WantedBy=multi-user.target
